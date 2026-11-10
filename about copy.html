@@ -1,0 +1,625 @@
+<!doctype html>
+<html lang="en-US">
+  <head>
+    <meta charset="utf-8" />
+    <meta content="IE=edge,chrome=1" http-equiv="X-UA-Compatible" />
+    <meta content="width=device-width, initial-scale=1" name="viewport" />
+    <title>About — Here, My Voice</title>
+
+    <link href="images/default-favicon.ico" rel="icon" type="image/x-icon" />
+    <link href="https://www.heremyvoice.org/about" rel="canonical" />
+    <meta content="Here, My Voice" property="og:site_name" />
+    <meta content="About — Here, My Voice" property="og:title" />
+    <meta content="https://www.heremyvoice.org/about" property="og:url" />
+    <meta content="website" property="og:type" />
+    <meta content="" name="description" />
+
+    <!-- Google Fonts 預連線與載入 (Poppins, Karla, Caveat) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@400..700&family=Karla:ital,wght@0,400;0,700;1,400;1,700&family=Poppins:ital,wght@0,400;0,500;0,700;1,400;1,700&display=swap"
+      rel="stylesheet"
+    />
+
+    <!-- 全域字體與標題自訂樣式 -->
+    <style>
+      body,
+      button,
+      input,
+      textarea,
+      select {
+        font-family: "Poppins", "Karla", sans-serif;
+      }
+      .header-title,
+      #site-title {
+        font-family: "Caveat", cursive !important;
+        font-size: 1.7rem !important;
+        font-weight: 500;
+      }
+      /* 外層容器 */
+      .about-section {
+        width: 100%;
+        background-color: #ebebeb;
+        padding: 7vw 2.5vw;
+        box-sizing: border-box;
+      }
+
+      .about-section .content-wrapper {
+        padding-right: var(--pagePadding);
+        padding-left: var(--pagePadding);
+        margin: 0 auto;
+        box-sizing: content-box;
+      }
+      .content-wrapper {
+        max-width: 1400px;
+        margin: 0 auto;
+        box-sizing: border-box;
+      }
+
+      /* 12欄網格系統 */
+      .about-section .sqs-grid-12 {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: flex-start;
+        gap: 2%; /* 欄位間距 */
+      }
+
+      /* 基礎欄位設定 (以 12 欄為基準計算百分比寬度) */
+      .col {
+        box-sizing: border-box;
+      }
+
+      .about-section .col.span-5 {
+        width: 40.5% !important;
+        /* 如果你希望圖片強制在文字上方，也可以改成 width: 100% 並調整排版 */
+      }
+
+      .about-section .col.span-1 {
+        width: 6.5% !important;
+      }
+      .about-section .col.span-6 {
+        width: 49% !important;
+      }
+
+      /* 圖片適應與保護原始比例 */
+      .image-block-wrapper img {
+        width: 100%;
+        height: auto;
+        display: block;
+        object-fit: cover;
+      }
+
+      /* 文字段落排版微調 */
+      .text-block p {
+        margin-bottom: 1.5em;
+        line-height: var(--body-font-line-height);
+      }
+
+      /* 響應式設計：螢幕較小時改為單欄上下排列 */
+      @media screen and (max-width: 767px) {
+        .sqs-grid-12 {
+          flex-direction: column;
+        }
+        .col.span-5,
+        .col.span-1,
+        .col.span-6 {
+          width: 100%;
+          margin-bottom: 2rem;
+        }
+      }
+      /* 確保 header 如果是固定在頂部 */
+      header.header,
+      .site-header {
+        top: 0;
+        left: 0;
+        width: 100%;
+        z-index: 1000; /* 確保導覽列層級在最上層，不會被內容蓋過去 */
+      }
+
+      /* 讓 main 往下推開，避免被固定 header 覆蓋 */
+      main.container,
+      #page {
+        padding-top: 124px; /* 數值請依你的 header 實際高度微調 (大於 header 高度即可) */
+      }
+
+      /* 團隊大區塊 */
+      .team-section {
+        width: 100%;
+        padding: 8vw 4vw;
+        background-color: #ffffff;
+        box-sizing: border-box;
+      }
+
+      .team-section .content-wrapper {
+        max-width: 1200px;
+        margin: 0 auto;
+      }
+
+      .section-main-title {
+        font-family: "Poppins", sans-serif;
+        font-size: clamp(2rem, 3vw, 2.75rem);
+        font-weight: 700;
+        text-align: center;
+        margin-bottom: 6rem;
+        color: #000000;
+      }
+
+      /* 每一列的 Flexbox 排版 */
+      .team-row {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        gap: 5%;
+        margin-bottom: 8rem;
+      }
+
+      /* 奇數列：圖片在左，文字在右（預設） */
+      /* 偶數列：透過 row-reverse 讓圖片自動換到右側，完美對應原版設計 */
+      .team-row:nth-child(even) {
+        flex-direction: row-reverse;
+      }
+
+      /* 成員個人資訊欄位（大頭貼＋名字＋職稱） */
+      .team-member-col {
+        flex: 0 0 32%;
+        text-align: center;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+      }
+
+      /* 圓形大頭貼（維持 1:1 比例與圓形邊框） */
+      .member-photo {
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        overflow: hidden;
+        margin-bottom: 1.5rem;
+        box-shadow: 0 10px 25px rgba(0, 0, 0, 0.06);
+      }
+
+      .member-photo img {
+        width: 100%;
+        height: 100%;
+        object-fit: cover;
+      }
+
+      .member-name {
+        font-family: "Poppins", sans-serif;
+        font-size: 1.15rem;
+        font-weight: 700;
+        letter-spacing: 0.05em;
+        margin: 0 0 0.5rem 0;
+        color: #111;
+      }
+
+      .member-role {
+        font-family: "Karla", sans-serif;
+        font-size: 0.9rem;
+        color: #666;
+        margin: 0;
+      }
+
+      /* 文字與引言欄位 */
+      .team-text-col {
+        flex: 0 0 58%;
+        display: flex;
+        flex-direction: column;
+      }
+
+      .team-quote {
+        font-family: "Poppins", sans-serif;
+        font-size: clamp(1.25rem, 1.8vw, 1.65rem);
+        font-weight: 600;
+        line-height: 1.4;
+        color: #111111;
+        margin: 0 0 1.5rem 0;
+        border: none;
+        padding: 0;
+      }
+
+      .member-desc {
+        font-family: "Karla", sans-serif;
+        font-size: 1.05rem;
+        line-height: 1.75;
+        color: #444444;
+        margin: 0;
+      }
+
+      /* 響應式調整：手機螢幕時改為單欄上下排列 */
+      @media (max-width: 768px) {
+        .team-row,
+        .team-row:nth-child(even) {
+          flex-direction: column;
+          gap: 2.5rem;
+          margin-bottom: 5rem;
+        }
+
+        .team-member-col,
+        .team-text-col {
+          flex: 0 0 100%;
+          width: 100%;
+        }
+
+        .member-photo {
+          width: 180px;
+          height: 180px;
+        }
+      }
+    </style>
+    <!-- 本地共用樣式表 -->
+    <link href="style/about.css" rel="stylesheet" />
+  </head>
+
+  <body class="about-page">
+    <div class="clearfix site-wrapper" id="siteWrapper">
+      <!-- 導覽列 Header -->
+      <header
+        data-test="header"
+        id="header"
+        class="white-bold header theme-col--primary"
+        data-section-theme="white-bold"
+        data-controller="Header"
+        data-section-id="header"
+        data-header-style="theme"
+        tabindex="-1"
+      >
+        <div class="sqs-announcement-bar-dropzone"></div>
+
+        <div class="header-announcement-bar-wrapper">
+          <a href="#page" class="header-skip-link sqs-button-element--primary">
+            Skip to Content
+          </a>
+
+          <div
+            class="header-border"
+            data-header-style="theme"
+            data-header-border="false"
+            data-test="header-border"
+          ></div>
+          <div
+            class="header-dropshadow"
+            data-header-style="theme"
+            data-header-dropshadow="false"
+            data-test="header-dropshadow"
+          ></div>
+
+          <div
+            class="header-inner container--fluid header-mobile-layout-logo-left-nav-right header-layout-nav-right"
+            data-test="header-inner"
+          >
+            <!-- Background -->
+            <div class="header-background theme-bg--primary"></div>
+
+            <div class="header-display-desktop" data-content-field="site-title">
+              <!-- Title and nav wrapper -->
+              <div class="header-title-nav-wrapper">
+                <!-- Title -->
+                <div class="header-title" data-animation-role="header-element">
+                  <div class="header-title-text">
+                    <a
+                      id="site-title"
+                      href="index.html"
+                      data-animation-role="header-element"
+                      >Here, My Voice</a
+                    >
+                  </div>
+                </div>
+
+                <!-- Nav -->
+                <div class="header-nav">
+                  <div class="header-nav-wrapper">
+                    <nav class="header-nav-list">
+                      <div
+                        class="header-nav-item header-nav-item--collection header-nav-item--active"
+                      >
+                        <a
+                          href="about.html"
+                          data-animation-role="header-element"
+                          aria-current="page"
+                          >About</a
+                        >
+                      </div>
+                      <div class="header-nav-item header-nav-item--collection">
+                        <a
+                          href="participants.html"
+                          data-animation-role="header-element"
+                          >Participants</a
+                        >
+                      </div>
+                      <div class="header-nav-item header-nav-item--collection">
+                        <a
+                          href="podcasts.html"
+                          data-animation-role="header-element"
+                          >Podcasts</a
+                        >
+                      </div>
+                      <div class="header-nav-item header-nav-item--collection">
+                        <a
+                          href="research.html"
+                          data-animation-role="header-element"
+                          >Research</a
+                        >
+                      </div>
+                      <div class="header-nav-item header-nav-item--collection">
+                        <a
+                          href="contact-us.html"
+                          data-animation-role="header-element"
+                          >Contact Us</a
+                        >
+                      </div>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Actions -->
+              <div class="header-actions header-actions--right">
+                <div class="showOnMobile"></div>
+                <div class="showOnDesktop"></div>
+              </div>
+
+              <!-- Burger -->
+              <div
+                class="header-burger menu-overlay-has-visible-non-navigation-items no-actions"
+                data-animation-role="header-element"
+              >
+                <button
+                  class="header-burger-btn burger"
+                  data-test="header-burger"
+                >
+                  <span
+                    hidden
+                    class="js-header-burger-open-title visually-hidden"
+                    >Open Menu</span
+                  >
+                  <span
+                    hidden
+                    class="js-header-burger-close-title visually-hidden"
+                    >Close Menu</span
+                  >
+                  <div class="burger-box">
+                    <div
+                      class="burger-inner header-menu-icon-doubleLineHamburger"
+                    >
+                      <div class="top-bun"></div>
+                      <div class="patty"></div>
+                      <div class="bottom-bun"></div>
+                    </div>
+                  </div>
+                </button>
+              </div>
+            </div>
+
+            <div class="header-display-mobile" data-content-field="site-title">
+              <div class="header-title-nav-wrapper">
+                <div class="header-title" data-animation-role="header-element">
+                  <div class="header-title-text">
+                    <a
+                      id="site-title"
+                      href="/"
+                      data-animation-role="header-element"
+                      >Here, My Voice</a
+                    >
+                  </div>
+                </div>
+                <div class="header-nav">
+                  <div class="header-nav-wrapper">
+                    <nav class="header-nav-list">
+                      <div
+                        class="header-nav-item header-nav-item--collection header-nav-item--active"
+                      >
+                        <a
+                          href="/about"
+                          data-animation-role="header-element"
+                          aria-current="page"
+                          >About</a
+                        >
+                      </div>
+                      <div class="header-nav-item header-nav-item--collection">
+                        <a
+                          href="/participants"
+                          data-animation-role="header-element"
+                          >Participants</a
+                        >
+                      </div>
+                      <div class="header-nav-item header-nav-item--collection">
+                        <a href="/podcasts" data-animation-role="header-element"
+                          >Podcasts</a
+                        >
+                      </div>
+                      <div class="header-nav-item header-nav-item--collection">
+                        <a href="/research" data-animation-role="header-element"
+                          >Research</a
+                        >
+                      </div>
+                      <div class="header-nav-item header-nav-item--collection">
+                        <a
+                          href="/contact-us"
+                          data-animation-role="header-element"
+                          >Contact Us</a
+                        >
+                      </div>
+                    </nav>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </header>
+
+      <!-- 主要內容 Main -->
+      <main class="container" id="page" role="main">
+        <article class="page-regions">
+          <section class="about-section">
+            <div class="content-wrapper">
+              <div class="sqs-grid-12">
+                <!-- 左側欄位 (對應原本 span-5：包含標題與圖片) -->
+                <div class="col sqs-col-5 span-5">
+                  <p class="sqs-block-content">
+                    <strong class="sqsrte-large">About</strong>
+                  </p>
+                  <div class="image-block">
+                    <figure class="intrinsic">
+                      <div class="image-block-wrapper">
+                        <img
+                          src="images/Screen+Shot+2021-10-22+at+4.01.37+PM.png"
+                          alt="About Image"
+                        />
+                      </div>
+                    </figure>
+                  </div>
+                </div>
+
+                <!-- 中間間距欄位 (對應原本 span-1 的 spacer) -->
+                <div class="col span-1 spacer-col"></div>
+
+                <!-- 右側欄位 (對應原本 span-6：包含主要文字內文) -->
+                <div class="col span-6">
+                  <div class="text-block">
+                    <p>
+                      Voice and the ability to create sounds that emanate from
+                      the body are fundamental to human experience. Yet, many
+                      people in the hard-of-hearing community have no
+                      relationship to the creative power of their voice, and as
+                      a result do not experience an entire aspect of human
+                      embodiment.
+                    </p>
+                    <p>
+                      In a collaboration between students from USC’s Thornton
+                      School of Music and the Hearing Loss Association of
+                      America LA (HLAA), Here, My Voice supports members of the
+                      hard-of-hearing community by providing individual voice
+                      lessons designed to help members gain confidence in using
+                      their voice. The program will also assists members in the
+                      exploration of the creative and expressive possibilities
+                      of their voice.
+                    </p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </section>
+          <section class="team-section">
+            <div class="content-wrapper">
+              <p class="sqs-block-content" style="text-align: center">
+                <strong class="sqsrte-large">Meet The Team</strong>
+              </p>
+
+              <!-- 成員 1：圖片在左，文字在右 -->
+              <div class="team-row">
+                <div class="team-member-col">
+                  <div class="member-photo">
+                    <img
+                      src="images/juri.jpeg"
+                      alt="Juri Hwang"
+                      loading="lazy"
+                    />
+                  </div>
+                  <h3 class="member-name">JURI HWANG</h3>
+                  <p class="member-role">Principle Investigator</p>
+                </div>
+                <div class="team-text-col">
+                  <blockquote class="team-quote">
+                    “A deep and multi-disciplinary collaboration was critical in
+                    building Here, My Voice.”
+                  </blockquote>
+                  <p class="member-desc">
+                    The project originated from artist-researcher’s intuitive
+                    understanding of the pains the community members experience
+                    and their longing to re/connect with their voice to
+                    experience its creative possibilities. It also comes from a
+                    bold and artistic imagination of what we can be possible
+                    through human connections and what we can accomplish when we
+                    come together with shared passion to improve the lives of
+                    vulnerable members of our society. Without an existing
+                    example to guide us, we relied on deep collaboration of a
+                    passionate, multidisciplinary team of experts in building
+                    our program. As a principal investigator, I am extremely
+                    proud of the work and dedication of our truly exceptional
+                    team comprised of domain experts, faculty mentors, our
+                    brilliant vocal arts students, and the hard of hearing
+                    participants, who bestowed their trust on us and stepped out
+                    of their comfort zone to try something new. I am grateful
+                    for the generous support of Arts in Action to make to this
+                    project to come true and to blossom.
+                  </p>
+                </div>
+              </div>
+
+              <!-- 成員 2：圖片在右，文字在左（自動交錯） -->
+              <div class="team-row">
+                <div class="team-member-col">
+                  <div class="member-photo">
+                    <img
+                      src="images/frances_nowlen.jpg"
+                      alt="Frances Nowlen"
+                      loading="lazy"
+                    />
+                  </div>
+                  <h3 class="member-name">FRANCES NOWLEN</h3>
+                  <p class="member-role">Project Coordinator</p>
+                </div>
+                <div class="team-text-col">
+                  <blockquote class="team-quote">
+                    “I was so inspired by the program's ability to improve vocal
+                    confidence and emotions while singing aided through music.”
+                  </blockquote>
+                  <p class="member-desc">
+                    Working as a project coordinator for the Here, My Voice
+                    program has been one of the most influential and inspiring
+                    activities I have been fortunate enough to be able to be a
+                    part of. Throughout the process, I have learned that success
+                    in all forms truly relies on collaboration, both within
+                    coordination and especially seen between our teacher and
+                    student pairs. I was so inspired by the program's ability to
+                    improve vocal confidence and emotions while singing aided
+                    through music, as noticeable during our Final Performance.
+                    It was a pleasure to observe the power of connection and
+                    friendship bloom, even over Zoom, and I was inspired by the
+                    commitment, openness, and bravery to step out of comfort
+                    zones by all those who participated.
+                  </p>
+                </div>
+              </div>
+
+              <!-- 後續成員可依此類推複製 .team-row，並透過 CSS 達到自動奇偶數左右交錯 -->
+            </div>
+          </section>
+        </article>
+      </main>
+
+      <!-- 頁尾 Footer -->
+      <footer
+        class="sections"
+        id="footer-sections"
+        style="padding: 60px 0; background-color: #ebebeb"
+      >
+        <div class="content-wrapper">
+          <div
+            class="content"
+            style="
+              max-width: 1200px;
+              margin: 0 auto;
+              display: flex;
+              justify-content: space-between;
+            "
+          >
+            <div>
+              <p class="sqsrte-small">A USC Arts in Action project.</p>
+              <h3>Here, My Voice</h3>
+            </div>
+            <div>
+              <p class="sqsrte-small">About</p>
+              <p class="sqsrte-small">Student Teams</p>
+              <p class="sqsrte-small">Podcasts</p>
+              <p class="sqsrte-small">Research</p>
+            </div>
+          </div>
+        </div>
+      </footer>
+    </div>
+  </body>
+</html>
